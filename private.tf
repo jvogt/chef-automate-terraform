@@ -45,7 +45,7 @@ resource "aws_instance" "builder-1" {
   source_dest_check = false
 
   tags {
-    Name = "Builder 1"
+    Name = "${var.aws_username}-automate-runner-01"
   }
 }
 resource "aws_instance" "builder-2" {
@@ -58,7 +58,7 @@ resource "aws_instance" "builder-2" {
   source_dest_check = false
 
   tags {
-    Name = "Builder 2"
+    Name = "${var.aws_username}-automate-runner-02"
   }
 }
 resource "aws_instance" "builder-3" {
@@ -71,6 +71,6 @@ resource "aws_instance" "builder-3" {
   source_dest_check = false
 
   tags {
-    Name = "Builder 3"
+    Name = "${var.aws_username}-automate-runner-03"
   }
 }

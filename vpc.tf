@@ -14,7 +14,7 @@ resource "aws_subnet" "a-public" {
   availability_zone = "${var.aws_region}a"
 
   tags {
-    Name = "Public Subnet ${var.aws_region}a"
+    Name = "${var.aws_username}-automate-public-${var.aws_region}a"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_subnet" "a-private" {
   cidr_block = "${var.private_subnet_cidr}"
   availability_zone = "${var.aws_region}a"
   tags = {
-    Name = "Private Subnet ${var.aws_region}a"
+    Name = "${var.aws_username}-automate-private-${var.aws_region}a"
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_route_table" "private_route_table" {
   vpc_id = "${aws_vpc.default.id}"
 
   tags {
-      Name = "Private route table"
+      Name = "${var.aws_username}-private-route-table"
   }
 }
  

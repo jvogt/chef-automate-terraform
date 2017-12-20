@@ -42,7 +42,7 @@ resource "aws_security_group" "public" {
   vpc_id = "${aws_vpc.default.id}"
 
   tags {
-    Name = "PublicSG"
+    Name = "${var.aws_username}-automate-public"
   }
 }
 
@@ -66,7 +66,7 @@ resource "aws_instance" "automate-server" {
   source_dest_check = false
 
   tags {
-    Name = "Automate Server"
+    Name = "${var.aws_username}-automate-automate-server"
   }
 }
 
@@ -90,7 +90,7 @@ resource "aws_instance" "chef-server" {
   source_dest_check = false
 
   tags {
-    Name = "Chef Server"
+    Name = "${var.aws_username}-automate-chef-server"
   }
 }
 
