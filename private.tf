@@ -5,20 +5,6 @@ resource "aws_security_group" "private" {
   name = "private"
   description = "Allow incoming connections."
 
-  ingress {
-    from_port = -1
-    to_port = -1
-    protocol = "icmp"
-    cidr_blocks = ["${var.vpc_cidr}"]
-  }
-
-  egress { # all outbound
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   vpc_id = "${aws_vpc.default.id}"
 
   tags {
@@ -28,7 +14,16 @@ resource "aws_security_group" "private" {
   }
 }
 
-resource "aws_security_group_rule" "allow_all_from_public" {
+resource "aws_security_group_rule" "private_allow_outbound_to_world" {
+  type = "egress"
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.private.id}"
+}
+
+resource "aws_security_group_rule" "private_allow_all_from_public" {
   type            = "ingress"
   from_port       = 0
   to_port         = 0

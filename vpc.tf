@@ -35,6 +35,11 @@ resource "aws_subnet" "a-private" {
 
 resource "aws_internet_gateway" "default" {
   vpc_id = "${aws_vpc.default.id}"
+  tags {
+    Name = "${var.aws_username}-private-route-table"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
+  }
 }
 
 resource "aws_route" "internet_access" {
