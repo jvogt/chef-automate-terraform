@@ -43,6 +43,15 @@ resource "aws_security_group_rule" "public_allow_22_from_world" {
   security_group_id = "${aws_security_group.public.id}"
 }
 
+resource "aws_security_group_rule" "public_allow_8989_from_world" {
+  type = "ingress"
+  from_port = 8989
+  to_port = 8989
+  protocol = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.public.id}"
+}
+
 resource "aws_security_group_rule" "public_allow_outbound_to_world" {
   type = "egress"
   from_port = 0
@@ -53,25 +62,27 @@ resource "aws_security_group_rule" "public_allow_outbound_to_world" {
 }
 
 
-resource "aws_security_group_rule" "public_allow_all_from_private" {
-  type            = "ingress"
-  from_port       = 0
-  to_port         = 0
-  protocol        = "-1"
-  source_security_group_id = "${aws_security_group.private.id}"
+resource "aws_security_group_rule" "public_allow_all_from_vpc" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["${var.vpc_cidr}"]
   security_group_id = "${aws_security_group.public.id}"
 }
 
 resource "aws_instance" "automate-server" {
   ami = "${lookup(var.amis, var.aws_region)}"
   availability_zone = "${var.aws_region}a"
-  instance_type = "m3.large"
+  instance_type = "m3.xlarge"
   key_name = "${var.aws_key_name}"
   vpc_security_group_ids = ["${aws_security_group.public.id}"]
   subnet_id = "${aws_subnet.a-public.id}"
   associate_public_ip_address = true
   source_dest_check = false
-
+  root_block_device {
+    volume_size = "80"
+  }
   tags {
     Name = "${var.aws_username}-automate-automate-server"
     created-by = "${var.full_name}"
@@ -97,7 +108,9 @@ resource "aws_instance" "chef-server" {
   subnet_id = "${aws_subnet.a-public.id}"
   associate_public_ip_address = true
   source_dest_check = false
-
+  root_block_device {
+    volume_size = "80"
+  }
   tags {
     Name = "${var.aws_username}-automate-chef-server"
     created-by = "${var.full_name}"
