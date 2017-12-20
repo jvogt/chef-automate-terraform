@@ -31,3 +31,7 @@ variable "private_subnet_cidr" {
 variable "aws_username" {
   description = "Used for tagging"
 }
+
+variable "full_name" {
+  description = "Your Full Name"
+}

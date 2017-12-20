@@ -22,7 +22,9 @@ resource "aws_security_group" "private" {
   vpc_id = "${aws_vpc.default.id}"
 
   tags {
-    Name = "PrivateSG"
+    Name = "${var.aws_username}-automate-private"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 
@@ -46,6 +48,8 @@ resource "aws_instance" "builder-1" {
 
   tags {
     Name = "${var.aws_username}-automate-runner-01"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 resource "aws_instance" "builder-2" {
@@ -59,6 +63,8 @@ resource "aws_instance" "builder-2" {
 
   tags {
     Name = "${var.aws_username}-automate-runner-02"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 resource "aws_instance" "builder-3" {
@@ -72,5 +78,7 @@ resource "aws_instance" "builder-3" {
 
   tags {
     Name = "${var.aws_username}-automate-runner-03"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }

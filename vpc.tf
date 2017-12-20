@@ -4,6 +4,8 @@ resource "aws_vpc" "default" {
   enable_dns_support = true
   tags {
     Name = "${var.aws_username}-automate-vpc"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 
@@ -15,6 +17,8 @@ resource "aws_subnet" "a-public" {
 
   tags {
     Name = "${var.aws_username}-automate-public-${var.aws_region}a"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 
@@ -24,6 +28,8 @@ resource "aws_subnet" "a-private" {
   availability_zone = "${var.aws_region}a"
   tags = {
     Name = "${var.aws_username}-automate-private-${var.aws_region}a"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 
@@ -52,7 +58,9 @@ resource "aws_route_table" "private_route_table" {
   vpc_id = "${aws_vpc.default.id}"
 
   tags {
-      Name = "${var.aws_username}-private-route-table"
+    Name = "${var.aws_username}-private-route-table"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
  

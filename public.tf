@@ -25,13 +25,6 @@ resource "aws_security_group" "public" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port = -1
-    to_port = -1
-    protocol = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress { # all outbound
     from_port = 0
     to_port = 0
@@ -43,6 +36,8 @@ resource "aws_security_group" "public" {
 
   tags {
     Name = "${var.aws_username}-automate-public"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 
@@ -67,6 +62,8 @@ resource "aws_instance" "automate-server" {
 
   tags {
     Name = "${var.aws_username}-automate-automate-server"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 
@@ -91,6 +88,8 @@ resource "aws_instance" "chef-server" {
 
   tags {
     Name = "${var.aws_username}-automate-chef-server"
+    created-by = "${var.full_name}"
+    user = "${var.aws_username}"
   }
 }
 
